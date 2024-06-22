@@ -1,0 +1,17 @@
+# Our deployment key
+gitfau
+
+# other folders and repos
+in-binaries/
+out/
+avatar2/
+avatar-qemu/
+
+*.md.backup
+.idea/
+*.swp
+*.kdev4
+.kdev4/
+__pycache__/
+*.py[c|o]
+core

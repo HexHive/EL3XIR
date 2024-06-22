@@ -1,0 +1,2 @@
+common-obj-y += $(devices-dirs-y)
+obj-y += $(devices-dirs-y)

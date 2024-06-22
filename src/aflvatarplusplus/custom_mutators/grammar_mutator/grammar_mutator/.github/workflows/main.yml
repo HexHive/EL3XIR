@@ -1,0 +1,65 @@
+#
+# american fuzzy lop++ - grammar mutator
+# --------------------------------------
+#
+# Written by Shengtuo Hu
+#
+# Copyright 2020 AFLplusplus Project. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# A grammar-based custom mutator written for GSoC '20.
+#
+
+name: Grammar Mutator CI
+
+on: [push, pull_request]
+
+jobs:
+  cmake-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        bash .github/workflows/setup-deps.sh
+    - name: Create build directory
+      run: |
+        mkdir build
+    - name: CMake
+      run: |
+        cd ./build
+        cmake -DENABLE_TESTING=ON -DANTLR_JAR_LOCATION=$(realpath ../antlr-4.8-complete.jar) -DGRAMMAR_FILE=$(realpath ../grammars/ruby.json) ../
+    - name: Compile
+      run: cmake --build build --parallel $(nproc)
+    - name: Unit testing
+      run: |
+        cd ./build
+        make test
+    - name: Valgrind memcheck on unit testing
+      run: |
+        cd ./build
+        make test_memcheck
+
+  make-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        bash .github/workflows/setup-deps.sh
+    - name: Compile
+      run: |
+        make -f GNUmakefile ENABLE_TESTING=1 GRAMMAR_FILE=grammars/ruby.json ANTLR_JAR_LOCATION=./antlr-4.8-complete.jar -j$(nproc)
+    - name: Unit testing
+      run: |
+        make -f GNUmakefile test
+    - name: Valgrind memcheck on unit testing
+      run: |
+        make -f GNUmakefile test_memcheck

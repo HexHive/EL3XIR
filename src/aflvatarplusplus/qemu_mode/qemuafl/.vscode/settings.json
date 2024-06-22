@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "qdev-properties.h": "c",
+        "arm_helper.h": "c",
+        "avatar_posix.h": "c",
+        "mqueue.h": "c",
+        "runstate.h": "c",
+        "*.inc": "c",
+        "*.tcc": "c",
+        "tcg-accel-ops-mttcg.h": "c",
+        "cpus.h": "c"
+    }
+}

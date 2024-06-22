@@ -1,0 +1,9 @@
+services:
+  secmon-rehosting:
+    image: secmon-rehosting:latest
+    build:
+      context: .
+      target: secmon-rehosting
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./.:/root/rehosting-framework:rw

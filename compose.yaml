@@ -1,0 +1,35 @@
+services:
+  el3xir-runner:
+    image: el3xir:latest
+    build:
+      context: .
+      target: el3xir
+      dockerfile: ./docker/Dockerfile
+    cpuset: ${CPUSET:-0}
+    environment:
+      SMFUZZ_HARNESSDATA_PATH: /in/harnessdata.csv
+    volumes:
+      - ./src:/src:rw
+      - ./docker/fuzzer-entrypoint.sh:/fuzzer-entrypoint.sh:ro
+      - ./docker/sh-entrypoint.sh:/sh-entrypoint.sh:ro
+      - ./docker/rerun-testcases.sh:/rerun-testcases.sh:ro
+      - ./docker/probe-funcIDs.sh:/probe-funcIDs.sh:ro
+      - ./docker/cov-plot-entrypoint.sh:/cov-plot-entrypoint.sh:ro
+      - ${IN:-./in}:/in:rw
+      - ${OUT:-./out}:/out:rw
+
+  el3xir-synthesis:
+    image: el3xir_synthesis:latest
+    build:
+      context: . 
+      target: el3xir_synthesis
+      dockerfile: ./docker/Dockerfile
+    environment:  
+      SMFUZZ_HARNESSDATA_PATH: /in/harnessdata.csv  
+    volumes:
+      - ./src:/src:rw
+      - ./docker/synthesis-entrypoint.sh:/synthesis-entrypoint.sh:ro
+      - ./docker/prepkernel-entrypoint.sh:/prepkernel-entrypoint.sh:ro
+      - ./docker/sh-entrypoint.sh:/sh-entrypoint.sh:ro
+      - ${IN:-./in}:/in:rw
+      - ${OUT:-./out}:/out:rw

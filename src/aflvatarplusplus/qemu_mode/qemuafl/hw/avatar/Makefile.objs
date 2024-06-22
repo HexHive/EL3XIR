@@ -1,0 +1,4 @@
+obj-$(TARGET_ARM)  += avatar_posix.o configurable_machine.o remote_memory.o arm_helper.o
+obj-$(TARGET_AARCH64)  += avatar_posix.o configurable_machine.o remote_memory.o arm_helper.o
+obj-$(TARGET_MIPS) += avatar_posix.o configurable_machine.o remote_memory.o
+obj-$(CONFIG_SOFTMMU) += interrupts.o
