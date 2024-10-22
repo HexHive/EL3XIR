@@ -73,7 +73,7 @@ Here, we provide a quick overview of the most interesting targets.
 For further documentation about parameters look into the Makefile.
 EL3XIR is designed to be extended with other secure monitor binaries.
 If trying to fuzz a new secure monitor with EL3XIR the following steps are required:
-* Implement rehosting environment: This includes a bootloader stub, secure world stub, normal world stup, and handling of hardware interactions.
+* Implement rehosting environment: This includes a bootloader stub, secure world stub, normal world stub, and handling of hardware interactions.
 	You may look into `../secmonRehosting/rehostingEnvironments/` to find examples.
 	Section 4.1 of our paper explains a high-level systematic process for rehosting secure monitor binaries.
     We note that our rehosting environments are directly dependent on the exact binary, i.e., if you use a new binary you need to adjust breakpoint locations.
