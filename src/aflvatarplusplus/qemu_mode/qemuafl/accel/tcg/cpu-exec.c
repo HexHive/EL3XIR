@@ -73,10 +73,10 @@ static unsigned char
 unsigned char *afl_area_ptr = dummy; /* Exported for afl_gen_trace */
 
 /* Exported variables populated by the code patched into elfload.c: */
-
-target_ulong afl_entry_point, /* Where our instrumentation starts...*/
-    afl_start_code,           /* .text start pointer      */
-    afl_end_code;             /* .text end pointer        */
+#define UNINITIALIZED 0x32398745
+target_ulong afl_entry_point = UNINITIALIZED; /* Where our instrumentation starts...*/
+target_ulong afl_start_code;               /* .text start pointer      */
+target_ulong afl_end_code;                 /* .text end pointer        */
 
 int afl_wants_cpu_to_stop = 0;
 
