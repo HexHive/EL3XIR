@@ -2784,7 +2784,8 @@ static void load_elf_image(const char *image_name, int image_fd,
     info->brk = 0;
     info->elf_flags = ehdr->e_flags;
 
-    if (!afl_entry_point) {
+    #define UNINITIALIZED 0x32398745
+    if (afl_entry_point == UNINITIALIZED) {
       char *ptr;
       if ((ptr = getenv("AFL_ENTRYPOINT")) != NULL) {
         afl_entry_point = strtoul(ptr, NULL, 16);

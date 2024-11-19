@@ -21,7 +21,14 @@ KERNEL_CONF ?= defconfig
 
 # specific for Linux
 # leave at least one core free
-NCORES = $(shell echo $$((`grep -c ^processor /proc/cpuinfo`-2)))
+# Determine the number of cores
+ifeq ($(shell uname), Linux)
+    NCORES = $(shell echo $$((`grep -c ^processor /proc/cpuinfo` - 2)))
+else ifeq ($(shell uname), Darwin)
+    NCORES = $(shell sysctl -n hw.physicalcpu | awk '{print $1 - 1}')
+else
+    NCORES = 4  # Default to 4 cores if OS is not detected
+endif
 NRUNS = $(shell seq 0 $(NCORES))
 
 # for running two campaigns at once with the same number of cores
